@@ -22,17 +22,17 @@ spec:
         pipelineRef:
           name: pipeline
         params:
-        - name: PARAM_0
+        - name: param0
           value: $(params.property0)
-        - name: PARAM_1
+        - name: param1
           value: $(params.param1)
-        - name: PARAM_2
+        - name: param2
           value: $(params.param2)
-        - name: PARAM_3
+        - name: param3
           value: $(params.param3)
-        - name: PARAM_4
+        - name: param4
           value: $(params.param4)
-        - name: PARAM_5
+        - name: param5
           value: "param5 static value in trigger template"
 ---
 apiVersion: tekton.dev/v1alpha1
