@@ -1,0 +1,60 @@
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: trigger-template
+spec:
+  params:
+    - name: param1
+      description: empty value by default
+      default: ''
+    - name: param2
+      description: coming from binding
+    - name: param3
+      description: coming from binding or env property
+    - name: param4
+    - name: param5
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1alpha1
+      kind: PipelineRun
+      metadata:
+        name: pipelinerun-$(uid)
+      spec:
+        pipelineRef:
+          name: pipeline
+        params:
+        - name: PARAM_0
+          value: $(params.property0)
+        - name: PARAM_1
+          value: $(params.param1)
+        - name: PARAM_2
+          value: $(params.param2)
+        - name: PARAM_3
+          value: $(params.param3)
+        - name: PARAM_4
+          value: $(params.param4)
+        - name: PARAM_5
+          value: "param5 static value in trigger template"
+---
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: trigger-binding
+spec:
+  params:
+    - name: param2
+      value: "param2 static value in trigger binding"
+    - name: param3
+      value: "param3 static value from trigger binding"
+    - name: param4
+      value: "$(params.property1)"
+---
+apiVersion: tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: event-listener
+spec:
+  triggers:
+    - binding:
+        name: trigger-binding
+      template:
+        name: trigger-template        

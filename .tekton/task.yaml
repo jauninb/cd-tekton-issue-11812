@@ -1,0 +1,34 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: the-task
+spec:
+  inputs:
+    params:
+      - name: param0
+      - name: param1
+      - name: param2
+      - name: param3
+      - name: param4
+      - name: param5
+  steps:
+    - name: show-params
+      image: ibmcom/pipeline-base-image
+      env:
+        - name: PARAM_0
+          value: $(inputs.params.param0)
+        - name: PARAM_1
+          value: $(inputs.params.param1)
+        - name: PARAM_2
+          value: $(inputs.params.param2)
+        - name: PARAM_3
+          value: $(inputs.params.param3)
+        - name: PARAM_4
+          value: $(inputs.params.param4)
+        - name: PARAM_5
+          value: $(inputs.params.param5)
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+          set -e -o pipefail
+          env | sort

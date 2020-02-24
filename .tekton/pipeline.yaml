@@ -1,0 +1,29 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: pipeline
+spec:
+  params:
+    - name: param0
+    - name: param1
+    - name: param2
+    - name: param3
+    - name: param4
+    - name: param5
+  tasks:
+    - name: pipeline-task
+      taskRef:
+        name: the-task
+      params:
+        - name: param0
+          value: $(params.param0)
+        - name: param1
+          value: $(params.param1)
+        - name: param2
+          value: $(params.param2)
+        - name: param3
+          value: $(params.param3)
+        - name: param4
+          value: $(params.param4)
+        - name: param5
+          value: $(params.param5)
